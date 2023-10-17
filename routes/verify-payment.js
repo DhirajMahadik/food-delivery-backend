@@ -1,8 +1,11 @@
-import express from 'express'
+import express, { response } from 'express'
 import crypto from 'crypto'
+import connect from '../db_connection/config.js'
 const route = express.Router()
 
-route.post('/verify-payment', (req, res) => {
+route.post('/verify-payment/:user_id', (req, res) => {
+
+    const user_id = req.params.user_id
 
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body
 
@@ -14,13 +17,14 @@ route.post('/verify-payment', (req, res) => {
     .digest("hex")
 
     if (generated_signature === razorpay_signature) {
-        res.status(200).json({
-            status: 'success',
+
+        connect.query('insert into orders (user_id,order_id,payment_id) values(?,?,?)',[user_id,razorpay_order_id,razorpay_payment_id],(error,response)=>{
+            if(error) throw error
         })
+
+        res.redirect(`http://localhost:3000/payment-confirmation/${'success'}/${razorpay_payment_id}`)
     }else{
-        res.status(200).json({
-            status: 'failed',
-        })
+        res.redirect(`http://localhost:3000/payment-confirmation/${'failed'}/${razorpay_payment_id}`)
     }
 
 

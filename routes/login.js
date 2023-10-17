@@ -9,7 +9,6 @@ const route = express.Router()
 
 route.post('/login', (req, res) => {
     try {
-        // console.log(process.env.JWT_SECRET)
         const email = req.body.email;
         let query = 'Select password, id from users where email = ?'
         connect.query(query, [email], async (error, response) => {
@@ -37,10 +36,10 @@ route.post('/login', (req, res) => {
 
 route.post('/register', (req, res) => {
     try {
-        const {name,phone,email,password} = req.body;
-        bcrypt.hash(password,2, (err, hash) => {
+        const { name, phone, email, password } = req.body;
+        bcrypt.hash(password, 2, (err, hash) => {
             if (err) res.status(500).send({ error: 'some error occurs' });
-            connect.query('insert into users(name,phone,email,password) values(?,?,?,?)', [name,phone,email, hash], (error, response) => {
+            connect.query('insert into users(name,phone,email,password) values(?,?,?,?)', [name, phone, email, hash], (error, response) => {
                 if (error) res.status(500).send({ error: error.message })
                 res.send(response)
             })
