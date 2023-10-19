@@ -11,8 +11,10 @@ const connect = mysql.createConnection({
 })
 
 // database details for your reference 
+
     // Tables = users , orders
-    // colums in tables = {
+    
+    // columns in tables = {
     //     users = id, name, phone, email, password
     //     orders = user_id, order_id, payment_id
     // }
