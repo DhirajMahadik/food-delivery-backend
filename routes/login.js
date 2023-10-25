@@ -10,7 +10,7 @@ const route = express.Router()
 route.post('/login', (req, res) => {
     try {
         const email = req.body.email;
-        let query = 'Select password, id from users where email = ?'
+        let query = 'Select password, id from food_app_users where email = ?'
         connect.query(query, [email], async (error, response) => {
             if (error) res.status(500).send({ error: 'some error occurs' });
             if (response.length !== 0) {
@@ -39,7 +39,7 @@ route.post('/register', (req, res) => {
         const { name, phone, email, password } = req.body;
         bcrypt.hash(password, 2, (err, hash) => {
             if (err) res.status(500).send({ error: 'some error occurs' });
-            connect.query('insert into users(name,phone,email,password) values(?,?,?,?)', [name, phone, email, hash], (error, response) => {
+            connect.query('insert into food_app_users(name,phone,email,password) values(?,?,?,?)', [name, phone, email, hash], (error, response) => {
                 if (error) res.status(500).send({ error: error.message })
                 res.send(response)
             })

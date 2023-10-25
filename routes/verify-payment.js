@@ -18,13 +18,13 @@ route.post('/verify-payment/:user_id', (req, res) => {
 
     if (generated_signature === razorpay_signature) {
 
-        connect.query('insert into orders (user_id,order_id,payment_id) values(?,?,?)',[user_id,razorpay_order_id,razorpay_payment_id],(error,response)=>{
+        connect.query('insert into food_app_orders (user_id,order_id,payment_id) values(?,?,?)',[user_id,razorpay_order_id,razorpay_payment_id],(error,response)=>{
             if(error) throw error
         })
 
-        res.redirect(`http://localhost:3000/payment-confirmation/${'success'}/${razorpay_payment_id}`)
+        res.redirect(`${process.env.CLIENT}/payment-confirmation/${'success'}/${razorpay_payment_id}`)
     }else{
-        res.redirect(`http://localhost:3000/payment-confirmation/${'failed'}/${razorpay_payment_id}`)
+        res.redirect(`${process.env.CLIENT}/payment-confirmation/${'failed'}/${razorpay_payment_id}`)
     }
 
 
