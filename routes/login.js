@@ -18,14 +18,14 @@ route.post('/login', (req, res) => {
                 if (pass) {
                     let id = response[0].id
                     JWT.sign({ id }, process.env.JWT_SECRET, (error, token) => {
-                        if (error) res.status(500).send({ error: 'some error occurs' });
+                        if (error) res.status(500).send({ error:'some error occurs' });
                         res.send({ token })
                     })
                 } else {
-                    res.status(404).send({ error: 'Invalid user credential' })
+                    res.status(404).send({ error:'Invalid user credential' })
                 }
             } else {
-                res.status(404).send({ error: 'User not found' })
+                res.status(404).send({ error:'User not found' })
             }
 
         })
