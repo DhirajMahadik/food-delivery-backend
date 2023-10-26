@@ -15,7 +15,10 @@ env.config()
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended:'true'}))
-app.use(cors())
+app.use(cors({
+    origin:process.env.CLIENT,
+    methods:['GET','POST','DELETE','PUTE']
+}))
 
 export const instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY,
