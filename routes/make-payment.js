@@ -8,7 +8,7 @@ route.post('/make-payment', (req, res) => {
         currency: "INR"
     };
     instance.orders.create(options, function (err, order) {
-        if (err) throw err
+        if (err) throw res.status(500).send({error:'payment order is not created'})
         res.send(order)
     });
 

@@ -19,7 +19,7 @@ route.post('/verify-payment/:user_id', (req, res) => {
     if (generated_signature === razorpay_signature) {
 
         connect.query('insert into food_app_orders (user_id,order_id,payment_id) values(?,?,?)',[user_id,razorpay_order_id,razorpay_payment_id],(error,response)=>{
-            if(error) throw error
+            if(error) throw res.status(500).send({error:'something went wrong'})
         })
 
         res.redirect(`${process.env.CLIENT}/payment-confirmation/${'success'}/${razorpay_payment_id}`)
