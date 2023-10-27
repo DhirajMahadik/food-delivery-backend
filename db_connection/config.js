@@ -12,7 +12,7 @@ const connect = mysql.createConnection({
 
 // database details for your reference 
 
-    // Tables = food_app_users , food_app_orders
+    // Tables = users , orders
     
     // columns in tables = {
     //     users = id, name, phone, email, password
